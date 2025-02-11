@@ -4,7 +4,6 @@ import userModel from "@/models/user.model";
 import { connectDb } from "@/config/database";
 import jwt from 'jsonwebtoken';
 import { serialize } from "cookie";
-import { LoginSchema } from "@/dto/auth.dto";
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 export async function POST(req: Request) {
   await connectDb();
