@@ -2,10 +2,9 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import userModel from "@/models/user.model";
 import { connectDb } from "@/config/database";
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
-import { NextApiResponse } from "next";
 import jwt from 'jsonwebtoken';
 import { serialize } from "cookie";
+const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 export async function POST(req: Request) {
   await connectDb();
 

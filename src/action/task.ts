@@ -17,8 +17,8 @@ export const fetchTasks = async () => {
 
         return data;
         
-    } catch (error: any) {
-        if (error.status === 404) {
+    } catch (error: unknown) {
+        if ((error as any).status === 404) {
             return [];
         } else {
             toast.error("Failed to fetch tasks");
@@ -39,6 +39,7 @@ export const addOrUpdateTask = async (task: Task, editingTask: Task) => {
             return response;
         }
     } catch (error) {
+        console.log('error:From add or update', error);
         toast.error("Failed to add/update task");
     }
     return null;
@@ -56,6 +57,7 @@ export const deleteTask = async (taskId: string) => {
             return response;
         }
     } catch (error) {
+        console.log('error:From Delete', error);
         toast.error("Failed to delete task");
     }
     return null;

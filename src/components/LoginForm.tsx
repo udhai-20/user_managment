@@ -17,7 +17,11 @@ export default function LoginForm({ isLogin }: { isLogin: boolean }) {
         e.preventDefault();
         setLoading(true);
         setError("");
-        isLogin ? await Login({ email, password, router, setError, setLoading }) : await Register({ userName, email, password, router, setError, setLoading });
+        if (isLogin) {
+            await Login({ email, password, router, setError, setLoading });
+        } else {
+            await Register({ userName, email, password, router, setError, setLoading });
+        }
     };
 
     return (

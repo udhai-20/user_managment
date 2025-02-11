@@ -1,7 +1,8 @@
 import fetchClient from "@/utils/http";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 interface AuthProps {
-    userName?: string;
+    userName?
+    : string;
     email: string;
     password: string;
     router: AppRouterInstance; 
@@ -22,9 +23,13 @@ export const Login = async ({ email, password, router, setError, setLoading }: A
         localStorage.setItem("userData", JSON.stringify(data.data));
         alert("Login Successful!");
         router.push("/dashboard");
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error("Error in login:", error); // Log the complete error object
-        setError(error.message || "Some Technical Issue");
+        if (error instanceof Error) {
+            setError(error.message || "Some Technical Issue");
+        } else {
+            setError("Some Technical Issue");
+        }
     } finally {
         setLoading(false);
     }
@@ -43,8 +48,13 @@ export const Register = async ({ userName, email, password, router, setError, se
         }
         alert("Registered Successful!");
         router.push("/auth/login");
-    } catch (error: any) {
-        setError(error.message || "Some Technical Issue");
+    } catch (error: unknown) {
+        console.error("Error in login:", error); // Log the complete error object
+        if (error instanceof Error) {
+            setError(error.message || "Some Technical Issue");
+        } else {
+            setError("Some Technical Issue");
+        }
     } finally {
         setLoading(false);
     }

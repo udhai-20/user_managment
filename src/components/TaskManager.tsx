@@ -15,7 +15,7 @@ export default function TaskManager() {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [loading, setLoading] = useState(false);
-    const [deleteLoading, setDeleteLoading] = useState(null);
+    const [deleteLoading, setDeleteLoading] = useState<string|null>(null);
     const [editingTask, setEditingTask] = useState<Task | null>(null);
 
     useEffect(() => {
@@ -44,7 +44,7 @@ export default function TaskManager() {
         setLoading(false);
     };
 
-    const handleDelete = async (taskId: any) => {
+    const handleDelete = async (taskId: string) => {
         //delete task//
         setDeleteLoading(taskId);
         const response = await deleteTask(taskId);
@@ -53,13 +53,13 @@ export default function TaskManager() {
         }
         setDeleteLoading(null);
     };
-    const handleEdit = (task: any) => {
+    const handleEdit = (task: Task) => {
         //edit task//
         setTitle(task.title);
         setDescription(task.description)
         setEditingTask(task);
     }
-    const handleToggleComplete = async (task: any) => {
+    const handleToggleComplete = async (task: Task) => {
         //complete task initially it is false once it clicked then it become a completed and strike the text and again u cant change the status//
         const updatedTask = { ...task, completed: true };
         await addOrUpdateTask(updatedTask, task);
