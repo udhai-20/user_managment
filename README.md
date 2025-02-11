@@ -24,7 +24,7 @@ This is a **Task Management** web application built with **Next.js**, featuring 
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/task-manager.git
+git clone https://github.com/udhai-20/user_managment
 cd task-manager
 ```
 
