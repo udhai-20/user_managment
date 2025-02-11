@@ -1,6 +1,14 @@
 import fetchClient from "@/utils/http";
-
-export const Login = async ({ email, password, router, setError, setLoading }: { email: string, password: string, router?: any, setError: any, setLoading: any }) => {
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+interface AuthProps {
+    userName?: string;
+    email: string;
+    password: string;
+    router: AppRouterInstance; 
+    setError: React.Dispatch<React.SetStateAction<string>>; 
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>; 
+  }
+export const Login = async ({ email, password, router, setError, setLoading }: AuthProps) => {
     try {
         const method = "POST";
         const body = JSON.stringify({ email, password });
@@ -22,7 +30,7 @@ export const Login = async ({ email, password, router, setError, setLoading }: {
     }
 };
 
-export const Register = async ({ userName, email, password, router, setError, setLoading }: { userName: string, email: string, password: string, router?: any, setError: any, setLoading: any }) => {
+export const Register = async ({ userName, email, password, router, setError, setLoading }: AuthProps) => {
     // console.log('username:', userName, email, password);
     try {
         const method = "POST";

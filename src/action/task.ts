@@ -1,7 +1,12 @@
 // services/taskActions.ts
 import fetchClient from "@/utils/http";
 import { toast } from "react-hot-toast";
-
+interface Task {
+    _id?: string;
+    title: string;
+    description: string;
+    completed?: boolean;
+}
 export const fetchTasks = async () => {
     try {
         const data = await fetchClient("/api/task");
@@ -22,7 +27,7 @@ export const fetchTasks = async () => {
     }
 };
 
-export const addOrUpdateTask = async (task: any, editingTask: any) => {
+export const addOrUpdateTask = async (task: Task, editingTask: Task) => {
     try {
         const method = editingTask ? "PUT" : "POST";
         const body = JSON.stringify({ id: editingTask?._id, ...task });

@@ -1,5 +1,14 @@
 import React from "react";
-const TaskForm = ({ title, setTitle, description, setDescription, loading, addOrUpdateTask, editingTask }: { title: string, setTitle: any, description: string, setDescription: any, loading: boolean, addOrUpdateTask: any, editingTask: any }) => {
+interface TaskFormProps {
+    title: string;
+    setTitle: React.Dispatch<React.SetStateAction<string>>;
+    description: string;
+    setDescription: React.Dispatch<React.SetStateAction<string>>;
+    loading: boolean;
+    addAndUpdateTask: () => void;
+    editingTask: { _id: string; title: string; description: string } | null;
+  }
+const TaskForm = ({ title, setTitle, description, setDescription, loading, addAndUpdateTask, editingTask }: TaskFormProps) => {
     return (
         <div className="w-full max-w-lg bg-white p-6 rounded-lg shadow-md">
             <div className="flex flex-col gap-4 mb-4">
@@ -17,7 +26,7 @@ const TaskForm = ({ title, setTitle, description, setDescription, loading, addOr
                 />
                 <button
                     className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition disabled:opacity-50"
-                    onClick={addOrUpdateTask}
+                    onClick={() => addAndUpdateTask()}
                     disabled={loading}
                 >
                     {loading ? "Saving..." : editingTask ? "Update Task" : "Add Task"}

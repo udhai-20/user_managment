@@ -1,18 +1,24 @@
 import { motion } from "framer-motion";
-
+interface Task {
+    _id: string;
+    title: string;
+    description: string;
+    completed: boolean;
+  }  
+  interface TaskListProps {
+    tasks: Task[]; 
+    handleEdit: (task: Task) => void;
+    handleDelete: (taskId: string) => void;
+    handleToggleComplete: (task: Task) => void;
+    deleteLoading: string | null;
+  }
 const TaskList = ({ 
     tasks, 
     handleEdit, 
     handleDelete, 
     handleToggleComplete, 
     deleteLoading 
-}: { 
-    tasks: any[], 
-    handleEdit: (task: any) => void, 
-    handleDelete: (taskId: string) => void, 
-    handleToggleComplete: (task: any) => void, 
-    deleteLoading: string | null 
-}) => {
+}:TaskListProps) => {
     return (
         <div className="w-full max-w-lg mt-6 space-y-4 h-[400px] overflow-y-auto border rounded-lg p-2">
             {tasks?.length === 0 ? (

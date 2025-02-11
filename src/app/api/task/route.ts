@@ -3,7 +3,7 @@ import taskModel from "@/models/task.model";
 import { verifyToken } from "@/utils/verifyToken";
 import { JwtPayload } from "jsonwebtoken";
 // Create a Task (Protected)
-export async function POST(req: any) {
+export async function POST(req: Request) {
     try {
         await connectDb();
         const user = await verifyToken() as JwtPayload; // Verify token
@@ -16,14 +16,15 @@ export async function POST(req: any) {
 
         const task = await taskModel.create({ title, description, userId: user.id });
         return Response.json(task, { status: 201 });
-    } catch (error: any) {
-        console.error("POST Error:", error);
-        return new Response(error.message || "Internal Server Error", { status: 500 });
+    }catch (error: unknown) {
+        console.error("POST Error:", error);        
+        const errorMessage = error instanceof Error ? error.message : "Internal Server Error";
+        return new Response(errorMessage, { status: 500 });
     }
 }
 
 // Get All Tasks (Protected)
-export async function GET(req: any) {
+export async function GET() {
     try {
         await connectDb();
         const user = await verifyToken() as JwtPayload;
@@ -34,14 +35,15 @@ export async function GET(req: any) {
         if (!tasks.length) return new Response("No tasks found", { status: 404 });
 
         return Response.json(tasks, { status: 200 });
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error("GET Error:", error);
-        return new Response(error || "Internal Server Error", { status: 500 });
+        const errorMessage = error instanceof Error ? error.message : "Internal Server Error";
+        return new Response(errorMessage, { status: 500 });
     }
 }
 
 // Update a Task (Protected)
-export async function PUT(req: any) {
+export async function PUT(req: Request) {
     try {
         await connectDb();
         const user = await verifyToken() as JwtPayload;
@@ -59,14 +61,15 @@ export async function PUT(req: any) {
         if (!task) return new Response("Task not found or not authorized", { status: 404 });
 
         return Response.json(task, { status: 200 });
-    } catch (error: any) {
-        console.error("PUT Error:", error);
-        return new Response(error.message || "Internal Server Error", { status: 500 });
+    } catch (error: unknown) {
+        console.error("PUT Error:", error);        
+        const errorMessage = error instanceof Error ? error.message : "Internal Server Error";
+        return new Response(errorMessage, { status: 500 });
     }
 }
 
 // Delete a Task (Protected)
-export async function DELETE(req: any) {
+export async function DELETE(req: Request) {
     try {
         await connectDb();
         const user = await verifyToken() as JwtPayload;
@@ -78,8 +81,9 @@ export async function DELETE(req: any) {
         const task = await taskModel.findOneAndDelete({ _id: id, userId: user.id });
         if (!task) return new Response("Task not found or not authorized", { status: 404 });
         return Response.json("Task Deleted Successfully", { status: 200 });
-    } catch (err: any) {
-        console.error("PUT Error:", err);
-        return new Response(err.message || "Internal Server Error", { status: 500 });
+    }  catch (error: unknown) {
+        console.error("DELETE Error:", error);        
+        const errorMessage = error instanceof Error ? error.message : "Internal Server Error";
+        return new Response(errorMessage, { status: 500 });
     }
 }

@@ -6,7 +6,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 import { NextApiResponse } from "next";
 import jwt from 'jsonwebtoken';
 import { serialize } from "cookie";
-export async function POST(req: Request,res: NextApiResponse) {
+export async function POST(req: Request) {
   await connectDb();
 
   try {

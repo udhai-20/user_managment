@@ -3,15 +3,20 @@ import TaskForm from "./TaskForm";
 import TaskList from "./TaskList";
 import { addOrUpdateTask, deleteTask, fetchTasks } from "@/action/task";
 import toast from "react-hot-toast";
-
+interface Task {
+    _id: string;
+    title: string;
+    description: string;
+    completed: boolean;
+  }
 
 export default function TaskManager() {
-    const [tasks, setTasks] = useState<any[]>([]);
+    const [tasks, setTasks] = useState<Task[]>([]);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [loading, setLoading] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(null);
-    const [editingTask, setEditingTask] = useState(null);
+    const [editingTask, setEditingTask] = useState<Task | null>(null);
 
     useEffect(() => {
         //mounting stage load//
@@ -29,7 +34,7 @@ export default function TaskManager() {
         //add task//
         if (!title || !description) return toast.error("Add all the filed's");
         setLoading(true);
-        const response = await addOrUpdateTask({ title, description }, editingTask);
+        const response = await addOrUpdateTask({ title, description }, editingTask!);
         if (response) {
             setTitle("");
             setDescription("");
@@ -70,7 +75,7 @@ export default function TaskManager() {
                 description={description}
                 setDescription={setDescription}
                 loading={loading}
-                addOrUpdateTask={handleAddOrUpdateTask}
+                addAndUpdateTask={handleAddOrUpdateTask}
                 editingTask={editingTask}
             />
             <TaskList

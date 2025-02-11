@@ -19,6 +19,7 @@ export default function Navbar() {
             handleLogout();
             redirect("/auth/login");
         }
+        //eslint-disable-next-line
     }, []);
     const router = useRouter();
     const handleLogout = async () => {

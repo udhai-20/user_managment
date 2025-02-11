@@ -12,8 +12,8 @@ export const verifyToken = async (): Promise<jwt.JwtPayload | null> => {
     // Verify and decode token
     const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
     return decoded; // ✅ Returns { id, email, etc. }
-  } catch (error:any) {
-    console.error("Token Verification Error:", error.message);
-    return null; // Return null if token is invalid
-  }
+  } catch (error: unknown) {
+    console.error("Token Verification Error:", error instanceof Error ? error.message : "Unknown error occurred");
+    return null; 
+}
 };

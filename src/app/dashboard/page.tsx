@@ -14,16 +14,20 @@ interface User {
 export default function DashboardPage() {
   // Use the User type to define the state
   const [user, setUser] = useState<User | null>(null);
-
   useEffect(() => {
-    const storedUserData = localStorage.getItem("userData");
-    if (storedUserData) {
-      const parsedUser = JSON.parse(storedUserData) as User;
-      setUser(parsedUser);
-    } else {
-      async ()=>await fetch("/api/auth/logout", { method: "GET" });
-      redirect("/auth/login");
-    }
+    const fetchUser = async () => {
+      const storedUserData = localStorage.getItem("userData");
+      if (storedUserData) {
+        const parsedUser = JSON.parse(storedUserData) as User;
+        setUser(parsedUser);
+      } else {
+        await fetch("/api/auth/logout", { method: "GET" });
+        redirect("/auth/login");
+      }
+  
+    };
+
+    fetchUser();
   }, []);
 
   return (

@@ -1,8 +1,5 @@
 "use client"
-import { useAuth } from '@/app/context/AuthContext'
 import LoginForm from '@/components/LoginForm'
-import { redirect } from 'next/navigation'
-
 import React from 'react'
 
 const page = () => {

@@ -1,14 +1,18 @@
 import { createContext, useContext, useEffect, useState } from "react";
-
+interface User {
+  id: string;
+  name: string;
+  email: string;
+}
 interface AuthContextType {
-  user: any;
+  user: User|null;
   handleReset: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User|null>(null);
 
   useEffect(() => {
     // Get user data from localStorage on mount
