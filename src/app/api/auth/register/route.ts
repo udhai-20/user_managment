@@ -2,20 +2,11 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import userModel from "@/models/user.model";
 import { connectDb } from "@/config/database";
-import { RegisterSchema } from "@/dto/auth.dto";
 
 export async function POST(req: Request) {
   try{
     await connectDb();
-      const body = await req.json();
-        //requestValidation//
-    const validationResult = RegisterSchema.safeParse(body);
-     if (!validationResult.success) {
-      return NextResponse.json(
-         validationResult?.error?.errors[0]?.message||"Input Parameter Invalid" ,
-        { status: 400 }
-      );
-    };
+     
     const { userName, email, password } = await req.json();
     const hashedPassword = await bcrypt.hash(password, 10);  
     const existingUser = await userModel.findOne({ email });

@@ -10,19 +10,7 @@ export async function POST(req: Request) {
   await connectDb();
 
   try {
-    const body = await req.json();
-    console.log('body:', body);
-    //requestValidation//
-    const validationResult = LoginSchema.safeParse(body);
-    if (!validationResult.success) {
-      return NextResponse.json(
-        validationResult?.error?.errors[0]?.message || "Input Parameter Invalid",
-        { status: 400 }
-      );
-    }
-
-
-    const { email, password } =body;
+    const { email, password } =await req.json();;
 
     // Check if email and password are provided
     if (!email || !password) {
