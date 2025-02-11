@@ -18,7 +18,7 @@ export const fetchTasks = async () => {
         return data;
         
     } catch (error: unknown) {
-        if ((error as any).status === 404) {
+        if ((error as { status?: number }).status === 404) {
             return [];
         } else {
             toast.error("Failed to fetch tasks");
