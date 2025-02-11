@@ -10,7 +10,7 @@ interface Task {
     completed: boolean;
   }
 
-export default function TaskManager() {
+export default  function TaskManager() {
     const [tasks, setTasks] = useState<Task[]>([]);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -88,3 +88,5 @@ export default function TaskManager() {
         </div>
     );
 }
+
+

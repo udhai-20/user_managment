@@ -61,6 +61,7 @@ const TaskList = ({
                                 className="text-blue-500 hover:text-blue-700 transition"
                                 onClick={() => handleEdit(task)}
                                 aria-label="Edit Task"
+                                disabled={task.completed}
                             >
                                 ✏️
                             </button>
