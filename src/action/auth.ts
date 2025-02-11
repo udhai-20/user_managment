@@ -1,15 +1,17 @@
 import fetchClient from "@/utils/http";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import toast from "react-hot-toast";
 interface AuthProps {
     userName?
     : string;
     email: string;
     password: string;
-    router: AppRouterInstance; 
-    setError: React.Dispatch<React.SetStateAction<string>>; 
-    setLoading: React.Dispatch<React.SetStateAction<boolean>>; 
-  }
-export const Login = async ({ email, password, router, setError, setLoading }: AuthProps) => {
+    router: AppRouterInstance;
+    setError: React.Dispatch<React.SetStateAction<string>>;
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+    toast: typeof toast;
+}
+export const Login = async ({ email, password, router, setError, setLoading, toast }: AuthProps) => {
     try {
         const method = "POST";
         const body = JSON.stringify({ email, password });
@@ -17,25 +19,22 @@ export const Login = async ({ email, password, router, setError, setLoading }: A
         const data = res
         // console.log('Data received:', data);
         if (!res) {
+            console.log('res:', res);
             throw new Error(data.error || "Something went wrong");
         }
 
         localStorage.setItem("userData", JSON.stringify(data.data));
-        alert("Login Successful!");
+        toast.success("Login Successful!");
         router.push("/dashboard");
     } catch (error: unknown) {
-        console.error("Error in login:", error); // Log the complete error object
-        if (error instanceof Error) {
-            setError(error.message || "Some Technical Issue");
-        } else {
-            setError("Some Technical Issue");
-        }
+        setError((error as { message: string }).message || "Some Technical Issue");
+
     } finally {
         setLoading(false);
     }
 };
 
-export const Register = async ({ userName, email, password, router, setError, setLoading }: AuthProps) => {
+export const Register = async ({ userName, email, password, router, setError, setLoading, toast }: AuthProps) => {
     // console.log('username:', userName, email, password);
     try {
         const method = "POST";
@@ -46,15 +45,12 @@ export const Register = async ({ userName, email, password, router, setError, se
         if (!res) {
             throw new Error(data.error || "Something went wrong");
         }
-        alert("Registered Successful!");
+        toast.success("Registered Successful!");
         router.push("/auth/login");
     } catch (error: unknown) {
-        console.error("Error in login:", error); // Log the complete error object
-        if (error instanceof Error) {
-            setError(error.message || "Some Technical Issue");
-        } else {
-            setError("Some Technical Issue");
-        }
+        console.log('error:', error);
+
+        setError((error as { message: string }).message || "Some Technical Issue");
     } finally {
         setLoading(false);
     }

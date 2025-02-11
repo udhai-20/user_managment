@@ -4,6 +4,7 @@ import { redirect, useRouter } from "next/navigation";
 import Link from "next/link";
 import { Login, Register } from "@/action/auth";
 import { useAuth } from "@/app/context/AuthContext";
+import toast from "react-hot-toast";
 export default function LoginForm({ isLogin }: { isLogin: boolean }) {
     const [userName, setUserName] = useState("");
     const [email, setEmail] = useState("");
@@ -13,14 +14,15 @@ export default function LoginForm({ isLogin }: { isLogin: boolean }) {
     const router = useRouter();
     const {user}=useAuth();
     if(user) redirect("/dashboard");
+    
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
         setLoading(true);
         setError("");
         if (isLogin) {
-            await Login({ email, password, router, setError, setLoading });
+            await Login({ email, password, router, setError, setLoading,toast });
         } else {
-            await Register({ userName, email, password, router, setError, setLoading });
+            await Register({ userName, email, password, router, setError, setLoading,toast });
         }
     };
 

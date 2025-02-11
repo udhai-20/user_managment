@@ -10,12 +10,12 @@ export async function POST(req: Request) {
     const hashedPassword = await bcrypt.hash(password, 10);  
     const existingUser = await userModel.findOne({ email });
     // console.log('existingUser:', existingUser);
-    if (existingUser) return NextResponse.json({ error: "User already exists" }, { status: 400 });  
+    if (existingUser) return NextResponse.json( "User already exists" , { status: 400 });  
     const newUser = new userModel({ userName, email, password: hashedPassword });
     await newUser.save();
     return NextResponse.json({ message: "User registered successfully" }, { status: 201 });
   }catch(error){
     console.error("Register Error:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    return NextResponse.json("Internal Server Error" , { status: 500 });
   }
 }

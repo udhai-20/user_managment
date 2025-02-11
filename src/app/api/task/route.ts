@@ -10,7 +10,7 @@ export async function POST(req: Request) {
         if (!user) return new Response("Unauthorized to access this route", { status: 401 });
 
         const { title, description } = await req.json();
-        console.log('req:', title,description);
+        // console.log('req:', title,description);
         
         if (!title || !description) return new Response("Title and description are required", { status: 400 });
 

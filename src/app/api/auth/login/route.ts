@@ -13,21 +13,21 @@ export async function POST(req: Request) {
     
     // Check if email and password are provided
     if (!email || !password) {
-      return NextResponse.json({ error: "Email and Password are required" }, { status: 400 });
+      return NextResponse.json("Email and Password are required", { status: 400 });
     }
 
     // Check if user exists
     const existingUser = await userModel.findOne({ email });
     console.log('existingUser:', existingUser);
     if (!existingUser) {
-      return NextResponse.json({ error: "User does not exist" }, { status: 404 });
+      return NextResponse.json( "User does not exist" , { status: 404 });
     }
     
 
     // Verify password
     const isPasswordValid = await bcrypt.compare(password, existingUser.password);
     if (!isPasswordValid) {
-      return NextResponse.json({ error: "Invalid credentials" }, { status: 409 });
+      return NextResponse.json("Invalid credentials" , { status: 409 });
     }
     const payload = { email: existingUser.email, id: existingUser._id,name:existingUser.userName };
     const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
